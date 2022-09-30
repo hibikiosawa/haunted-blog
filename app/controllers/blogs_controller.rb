@@ -10,7 +10,9 @@ class BlogsController < ApplicationController
     @blogs = Blog.search(params[:term]).published.default_order
   end
 
-  def show; end
+  def show
+    @blog = Blog.permission_blogs(current_user).find(params[:id])
+  end
 
   def new
     @blog = Blog.new
@@ -46,7 +48,6 @@ class BlogsController < ApplicationController
 
   def set_blog
     @blog = Blog.find(params[:id])
-    raise ActiveRecord::RecordNotFound if @blog.secret? && current_user != @blog.user
   end
 
   def set_my_blog
