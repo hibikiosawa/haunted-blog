@@ -13,7 +13,7 @@ class Blog < ApplicationRecord
     where('title LIKE ? OR content LIKE ?', "%#{term}%", "%#{term}%")
   }
 
-  scope :permission_blogs, lambda { |user|
+  scope :permitted_blogs, lambda { |user|
     where(user: user).or(published)
   }
 
